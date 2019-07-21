@@ -1,0 +1,27 @@
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+
+video = cv2.VideoCapture("filename")
+count = video.get(cv2.CAP_PROP_FRAME_COUNT)
+
+x = 0
+f = np.zeros(int(count))
+
+while video.isOpened():
+
+    ret, frame = video.read()
+
+    if not ret:
+        break
+    print('mean:', frame.mean()) 
+    f[x] = frame.mean()
+    x += 1
+
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord("q"): break
+        
+plt.plot(f)
+
+video.release()
+cv2.destroyAllWindows()
